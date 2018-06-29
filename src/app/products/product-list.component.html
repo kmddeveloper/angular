@@ -1,0 +1,62 @@
+<div class='panel panel-primary'>
+        <div class='panel-heading'>
+            {{pageTitle}}            
+        </div>
+        <div class='panel-body'>
+            <div class='row' >
+                    <div class='col-md-2 pull-left'>Message:</div>
+                    <div class='col-md-4 pull-left' >
+                            {{eventMessage}}
+                    </div>
+            </div>
+
+            <div class='row' >
+                    <div class='col-md-2 pull-left'>Filter by:</div>
+                    <div class='col-md-4'>
+                        <input type='text' [(ngModel)]='listFilter' class='pull-left'/>
+                    </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <h3  class='pull-left'>Filtered by: {{listFilter}}  </h3>
+                </div>
+            </div>
+               
+            <div class='table-responsive'>
+                <table class='table'  *ngIf='products && products.length'>
+                    
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class='btn btn-primary' (click)='toggleImage()' >{{showImage? 'Hide': 'Show'}} Image</button>                                                               
+                            </th>
+                            <th>Product</th>
+                            <th>Code</th>
+                            <th>Available</th>
+                            <th>Price</th>
+                            <th>5 Star Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor='let product of filteredProducts'>
+                            <td><img *ngIf='showImage' [src]='product.imageUrl' [title]='product.productName' [style.width.px]='imageWith' [style.margin.px]='imageMargin'></td>   
+                            <td class='text-left'>{{product.productName}}</td>
+                            <td class='text-left'>{{product.productCode | lowercase}}</td>  
+                            <td class='text-left'>{{product.releaseDate}}</td>
+                            <td class='text-left'>{{product.price | currency:'USD':true: '1.2-2'}}</td>
+                            <td class='text-left'>
+                                <pm-star 
+                                [rating]='product.starRating'
+                                (notify)='onNotify($event)'
+                                
+                                >
+
+                                </pm-star>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
